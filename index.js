@@ -48,7 +48,7 @@ io.on('connection',socket=>{
 
         if(prevRoom){
             socket.leave(prevRoom)
-            io.to(prevRoom).emit('message',buildMsg(ADMIN,`${ADMIN}  has left the chat`));
+            io.to(prevRoom).emit('message',buildMsg(ADMIN,`${name}  has left the room`));
         }
 
         const user = activateUser(socket.id,name,room)
@@ -89,7 +89,9 @@ io.on('connection',socket=>{
 
         if(user){
             io.to(user.room).emit('message', buildMsg(ADMIN , `User ${user.name} has left.`));
+
             io.to(user.room).emit('userList',{users:getUserInRoom(user.room)})
+
             io.emit('roomList',{
                 rooms:getAllActiveRooms()
             })
@@ -139,9 +141,9 @@ function activateUser(id,name,room){
     return user
 }
 
-function userLeavesApp(is){
+function userLeavesApp(id){
     UserState.setUsers(
-        UserState.users.filter(user => user.id !==id)
+        UserState.users.filter(user => user.id !== id)
     )
 }
 

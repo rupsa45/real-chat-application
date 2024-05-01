@@ -11,7 +11,7 @@ const chatDisplay=document.querySelector(".chat-display");
 
 function sendMessage(e){
     e.preventDefault()
-    if(nameInput && msgInput && chatRoom){
+    if(nameInput.value && msgInput.value && chatRoom.value){
         socket.emit('message',{
             name:nameInput.value,
             text:msgInput.value,
@@ -35,12 +35,13 @@ document.querySelector(".form-msg")
     .addEventListener("submit",sendMessage);
 
 document.querySelector(".form-join")
-    .addEventListener("submit",sendMessage);
+    .addEventListener("submit",enterRoom);
 
 msgInput.addEventListener("keypress",()=>{
     socket.emit("activity",nameInput.value)
 })
 
+// Listen for messages 
 socket.on("message",(data)=>{
     activity.textContent=""
     const {name,text,time } =data
@@ -61,8 +62,8 @@ socket.on("message",(data)=>{
                 : 'post__header--reply'
                 }"
             >
-                <span class="post__header--name" >${name}:</span>
-                <span class="post__header--time" >${time}:</span>
+                <span class="post__header--name" >${name}</span>
+                <span class="post__header--time" >${time}</span>
             </div>
             <div class="post__text>${text}</div>
 
@@ -105,7 +106,7 @@ function showUsers(users){
         userList.innerHTML =`<em>Users in ${chatRoom.value}:</em>`
         users.forEach((user,index)=>{
             userList.textContent += `${user.name}`
-            if(userList.textContent > 1  && i !== users.length - 1){
+            if(userList.textContent > 1  && index !== users.length - 1){
                 userList.textContent +=','
             }
         })
@@ -118,7 +119,7 @@ function showRooms(rooms){
         roomList.innerHTML =`<em>Active Rooms : </em>`
         rooms.forEach((room,index)=>{
             roomList.textContent += `${room}`
-            if(roomList.textContent > 1  && i !== room.length - 1){
+            if(roomList.textContent > 1  && index !== room.length - 1){
                 roomList.textContent +=','
             }
         })
