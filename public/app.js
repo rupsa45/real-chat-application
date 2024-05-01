@@ -1,4 +1,7 @@
-const socket=io('https://real-chat-application-dmlq.onrender.com');
+const socket=io('https://real-chat-application-dmlq.onrender.com/');
+
+//https://real-chat-application-dmlq.onrender.com/
+
 
 const msgInput=document.querySelector('#message')
 const nameInput=document.querySelector('#name')
@@ -65,12 +68,12 @@ socket.on("message",(data)=>{
                 <span class="post__header--name" >${name}</span>
                 <span class="post__header--time" >${time}</span>
             </div>
-            <div class="post__text>${text}</div>
+            <div class="post__text">${text}</div>
 
         `
     }
     else{
-        li.innerHTML =`<div class="post__text>${text}</div>`
+        li.innerHTML =`<div class="post__text">${text}</div>`
     }
     document.querySelector('.chat-display').appendChild(li)
     chatDisplay.scrollTop=chatDisplay.scrollHeight;
@@ -113,14 +116,14 @@ function showUsers(users){
     }
 }
 
-function showRooms(rooms){
-    roomList.textContent=''
-    if(users){
-        roomList.innerHTML =`<em>Active Rooms : </em>`
-        rooms.forEach((room,index)=>{
-            roomList.textContent += `${room}`
-            if(roomList.textContent > 1  && index !== room.length - 1){
-                roomList.textContent +=','
+function showRooms(rooms) {
+    roomList.textContent = ''
+    if (rooms) {
+        roomList.innerHTML = '<em>Active Rooms:</em>'
+        rooms.forEach((room, i) => {
+            roomList.textContent += ` ${room}`
+            if (rooms.length > 1 && i !== rooms.length - 1) {
+                roomList.textContent += ","
             }
         })
     }

@@ -29,10 +29,10 @@ const UserState={
 
 const io=new Server(expressServer,{
     cors:{
-        origin:process.env.NODE_ENV === "production" ? false : ["https://real-chat-application-dmlq.onrender.com"],
+        origin:process.env.NODE_ENV === "production" ? false : ["https://real-chat-application-dmlq.onrender.com/"],
     }
 })
-
+//https://real-chat-application-dmlq.onrender.com/
 io.on('connection',socket=>{
 
     console.log(`User ${socket.id} connected`);
@@ -62,7 +62,7 @@ io.on('connection',socket=>{
         socket .join(user.room)
 
         //To user who joined 
-        socket.emit('message',buildMsg(ADMIN,`You have joined the  "${user.room}"  chat room`))
+        socket.emit('message',buildMsg(ADMIN,`You have joined the  ${user.room}  chat room`))
 
         //to evryone else
         socket.broadcast.to(user.room).emit('message',buildMsg(ADMIN, `${user.name} has Joined!`))
@@ -104,6 +104,7 @@ io.on('connection',socket=>{
         if(room){
             io.to(room).emit('message' , buildMsg(name ,text))
         }
+        console.log(`Message sent by ${name} in room ${room}: ${text}`);
 
         //io.emit('message', `${socket.id.substring(0, 5)}: ${data}`);
     });
