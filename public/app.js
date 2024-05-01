@@ -1,4 +1,4 @@
-const socket=io('https://real-chat-application-dmlq.onrender.com/');
+const socket = io('https://real-chat-application-dmlq.onrender.com/')
 
 //https://real-chat-application-dmlq.onrender.com/
 
@@ -87,7 +87,7 @@ let activityTimer;
 socket.on("activity",(name)=>{
     activity.textContent= `${name} is typing..`
 
-    //clear after 3 secs
+    //clear after 1 secs
     clearTimeout(activityTimer);
     activityTimer=setTimeout(() => {
         activity.textContent=""
@@ -99,30 +99,32 @@ socket.on('userList',({ users })=>{
     showUsers(users)
 })
 
-socket.on('roomList',({ rooms })=>{
-    showRooms(rooms)
-})
+
 
 function showUsers(users){
     userList.textContent=''
     if(users){
-        userList.innerHTML =`<em>Users in ${chatRoom.value}:</em>`
+        userList.innerHTML =`<em>Users in ${chatRoom.value} : </em>`
         users.forEach((user,index)=>{
             userList.textContent += `${user.name}`
-            if(userList.textContent > 1  && index !== users.length - 1){
-                userList.textContent +=','
+            if(users.length > 1  && index !== users.length - 1){
+                userList.textContent += " , "
             }
         })
     }
 }
 
-function showRooms(rooms) {
+socket.on('roomList',({rooms})=>{
+    showRooms(rooms)
+})
+
+function showRooms(rooms){
     roomList.textContent = ''
-    if (rooms) {
-        roomList.innerHTML = '<em>Active Rooms:</em>'
-        rooms.forEach((room, i) => {
+    if(rooms){
+        roomList.innerHTML='<em>Available Chat Rooms:</em>'
+        rooms.forEach((room,i)=>{
             roomList.textContent += ` ${room}`
-            if (rooms.length > 1 && i !== rooms.length - 1) {
+            if(rooms.length > 1 && i !== rooms.length-1){
                 roomList.textContent += ","
             }
         })

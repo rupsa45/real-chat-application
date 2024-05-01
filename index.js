@@ -29,9 +29,11 @@ const UserState={
 
 const io=new Server(expressServer,{
     cors:{
-        origin:process.env.NODE_ENV === "production" ? false : ["https://real-chat-application-dmlq.onrender.com/"],
+        origin:process.env.NODE_ENV === "production" ? false : ["https://real-chat-application-dmlq.onrender.com/"]
     }
 })
+
+
 //https://real-chat-application-dmlq.onrender.com/
 
 
@@ -93,7 +95,7 @@ io.on('connection',socket=>{
 
             io.to(user.room).emit('userList',{users:getUserInRoom(user.room)})
 
-            io.emit('roomList',{
+            io.emit('roomsList',{
                 rooms:getAllActiveRooms()
             })
         }
@@ -129,7 +131,6 @@ function buildMsg(name,text){
         time:new Intl.DateTimeFormat('default',{
             hour:'numeric',
             minute:"numeric",
-            second:"numeric"
         }).format(new Date())
     }
 }
