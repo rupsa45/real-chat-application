@@ -29,7 +29,7 @@ const UserState={
 
 const io=new Server(expressServer,{
     cors:{
-        origin:process.env.NODE_ENV === "production" ? false : ["https://real-chat-application-dmlq.onrender.com/"]
+        origin:process.env.NODE_ENV === "production" ? false : ["https://real-chat-application-dmlq.onrender.com/"],
     }
 })
 

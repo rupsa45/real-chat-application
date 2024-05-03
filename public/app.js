@@ -114,18 +114,18 @@ function showUsers(users){
     }
 }
 
-socket.on('roomList',({rooms})=>{
+socket.on('roomslist',({rooms})=>{
     showRooms(rooms)
 })
 
 function showRooms(rooms){
     roomList.textContent = ''
     if(rooms){
-        roomList.innerHTML='<em>Available Chat Rooms:</em>'
+        roomList.innerHTML=`<em>Available Chat Rooms:</em>`
         rooms.forEach((room,i)=>{
             roomList.textContent += ` ${room}`
-            if(rooms.length > 1 && i !== rooms.length-1){
-                roomList.textContent += ","
+            if(rooms.length > 1 && i !== rooms.length - 1){
+                roomList.textContent += " , "
             }
         })
     }
